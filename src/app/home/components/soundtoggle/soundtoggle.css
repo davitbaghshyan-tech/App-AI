@@ -1,0 +1,66 @@
+.sound-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #aee1ff;
+  background: rgba(2, 3, 10, 0.5);
+  border: 1px solid rgba(174, 225, 255, 0.4);
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.sound-toggle:hover {
+  border-color: #aee1ff;
+  box-shadow: 0 0 20px rgba(174, 225, 255, 0.4);
+}
+
+.sound-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 14px;
+}
+
+.sound-bars span {
+  width: 3px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: height 0.3s;
+}
+
+/* the bars only move while the sound is on */
+.sound-toggle--on .sound-bars span {
+  animation: bar 1.2s ease-in-out infinite;
+}
+
+.sound-toggle--on .sound-bars span:nth-child(2) { animation-delay: 0.2s; }
+.sound-toggle--on .sound-bars span:nth-child(3) { animation-delay: 0.4s; }
+.sound-toggle--on .sound-bars span:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes bar {
+  0%, 100% { height: 3px; }
+  50% { height: 14px; }
+}
+
+@media (max-width: 700px) {
+  .sound-toggle {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .sound-label {
+    display: none;
+  }
+}

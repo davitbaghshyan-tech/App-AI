@@ -1,0 +1,230 @@
+.planet {
+  position: fixed;
+  width: clamp(140px, 22vw, 320px);
+  aspect-ratio: 1;
+  z-index: 1;
+  pointer-events: none;
+  transform: translate(
+    calc(var(--mx, 0) * -30px),
+    calc(var(--my, 0) * -30px)
+  );
+  transition: transform 0.4s ease-out, opacity 1.2s ease;
+}
+
+.planet--hidden {
+  opacity: 0;
+}
+
+.planet-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: planet-float 8s ease-in-out infinite;
+}
+
+/* ---------- shared: sphere, rotating surface, shading ---------- */
+
+.planet-sphere {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 0 60px var(--glow),
+    0 0 140px var(--glow-soft);
+}
+
+/* the surface is twice as wide as the planet and slides sideways forever,
+   so it looks like the planet is rotating */
+.planet-texture,
+.planet-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat-x;
+  background-size: 50% 100%;
+  will-change: transform;
+  animation: planet-spin var(--spin, 90s) linear infinite;
+}
+
+.planet-clouds {
+  animation-duration: var(--cloud-spin, 60s);
+}
+
+/* light from the top-left, dark on the far side, glowing atmosphere on the rim */
+.planet-sphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 68%, var(--rim) 100%),
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.22), transparent 38%),
+    radial-gradient(
+      circle at 34% 30%,
+      transparent 42%,
+      rgba(0, 0, 12, 0.5) 72%,
+      rgba(0, 0, 8, 0.94) 100%
+    );
+}
+
+@keyframes planet-spin {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes planet-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-25px) rotate(2deg); }
+}
+
+/* ---------- 1. gas giant with rings ---------- */
+
+.planet--gas {
+  right: 11%;
+  bottom: 10%;
+  --glow: rgba(255, 170, 90, 0.35);
+  --glow-soft: rgba(255, 140, 60, 0.15);
+  --rim: rgba(255, 200, 140, 0.25);
+  --spin: 120s;
+}
+
+.planet--gas .planet-sphere {
+  background: linear-gradient(180deg, #c98a4b, #e8b97a 40%, #b8683a 70%, #7a3b22);
+}
+
+.planet--gas .planet-texture {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.003 0.05' numOctaves='5' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.2 0 0 0 0 0.08 2.6 0 0 0 -0.85'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.002 0.09' numOctaves='5' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.9 0 0 0 0 0.7 2.4 0 0 0 -0.95'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+/* rings: a flattened, tilted circle made of several bands */
+.planet-ring {
+  position: absolute;
+  left: -55%;
+  top: -55%;
+  width: 210%;
+  height: 210%;
+  border-radius: 50%;
+  transform: rotate(-10deg) scaleY(0.26);
+  background: radial-gradient(
+    circle closest-side,
+    transparent 0 56%,
+    rgba(255, 226, 180, 0.55) 58% 64%,
+    rgba(255, 226, 180, 0.12) 64% 67%,
+    rgba(255, 236, 205, 0.75) 67% 80%,
+    rgba(255, 226, 180, 0.05) 80% 83%,
+    rgba(255, 226, 180, 0.45) 83% 90%,
+    transparent 91%
+  );
+  filter: drop-shadow(0 0 6px rgba(255, 220, 170, 0.35));
+}
+
+/* the back half hides behind the planet, the front half crosses over it */
+.planet-ring--back {
+  z-index: 0;
+  clip-path: inset(0 0 50% 0);
+}
+
+.planet-ring--front {
+  z-index: 2;
+  clip-path: inset(50% 0 0 0);
+}
+
+/* ---------- 2. ocean world ---------- */
+
+.planet--aqua {
+  left: 8%;
+  top: 14%;
+  width: clamp(130px, 19vw, 280px);
+  --glow: rgba(80, 170, 255, 0.45);
+  --glow-soft: rgba(60, 140, 255, 0.18);
+  --rim: rgba(120, 200, 255, 0.45);
+  --spin: 100s;
+  --cloud-spin: 55s;
+}
+
+.planet--aqua .planet-sphere {
+  background: radial-gradient(circle at 40% 40%, #2f8cff, #0b4fb3 55%, #04225c);
+}
+
+.planet--aqua .planet-texture {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.22 0 0 0 0 0.52 0 0 0 0 0.2 9 0 0 0 -4.6'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+.planet--aqua .planet-clouds {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007 0.022' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 4.5 0 0 0 -2.3'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 3. lava world ---------- */
+
+.planet--ember {
+  left: 10%;
+  bottom: 10%;
+  width: clamp(110px, 16vw, 230px);
+  --glow: rgba(255, 80, 30, 0.45);
+  --glow-soft: rgba(255, 60, 20, 0.2);
+  --rim: rgba(255, 90, 40, 0.35);
+  --spin: 140s;
+  --cloud-spin: 140s;
+}
+
+.planet--ember .planet-sphere {
+  background: radial-gradient(circle at 40% 40%, #3a1a14, #1c0a08 60%, #080202);
+}
+
+.planet--ember .planet-texture,
+.planet--ember .planet-clouds {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.008' numOctaves='4' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.42 0 0 0 0 0.05 -8 0 0 0 1.8'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+/* the second copy is blurred, which makes the cracks glow */
+.planet--ember .planet-clouds {
+  filter: blur(6px);
+  mix-blend-mode: screen;
+}
+
+/* ---------- 4. ice world ---------- */
+
+.planet--frost {
+  right: 10%;
+  top: 16%;
+  width: clamp(110px, 16vw, 230px);
+  --glow: rgba(150, 230, 255, 0.45);
+  --glow-soft: rgba(120, 210, 255, 0.18);
+  --rim: rgba(190, 240, 255, 0.5);
+  --spin: 110s;
+}
+
+.planet--frost .planet-sphere {
+  background: radial-gradient(circle at 40% 40%, #e9fbff, #8fd8f0 45%, #3c7fb5 80%, #14325a);
+}
+
+.planet--frost .planet-texture {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.01' numOctaves='4' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.35 0 0 0 0 0.7 -8 0 0 0 1.5'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' preserveAspectRatio='none'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.03' numOctaves='5' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 3 0 0 0 -1.1'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+/* ---------- phones ---------- */
+
+@media (max-width: 700px) {
+  .planet,
+  .planet--aqua,
+  .planet--ember,
+  .planet--frost {
+    width: 34vw;
+  }
+
+  .planet--gas   { right: 8%; bottom: 5%; }
+  .planet--aqua  { left: 4%; top: 8%; }
+  .planet--ember { left: 4%; bottom: 5%; }
+  .planet--frost { right: 5%; top: 12%; }
+}
