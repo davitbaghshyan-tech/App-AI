@@ -1,0 +1,229 @@
+.create {
+  min-height: 100vh;
+  padding: 4rem 1.25rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(120, 60, 255, 0.25), transparent 50%),
+    radial-gradient(ellipse at 85% 60%, rgba(0, 150, 255, 0.15), transparent 55%),
+    #02030a;
+}
+
+/* hero */
+
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hero__title {
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+}
+
+.hero__title span {
+  color: #aee1ff;
+  text-shadow: 0 0 30px rgba(120, 60, 255, 0.8);
+}
+
+.hero__lead {
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* form */
+
+.create-form {
+  width: 100%;
+  max-width: 36rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.create-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border: none;
+}
+
+.create-field > span,
+.create-field > legend {
+  font-weight: 700;
+  color: #aee1ff;
+}
+
+.create-field input,
+.create-field textarea,
+.create-field select {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  font: inherit;
+  color: #ffffff;
+  background: rgba(120, 60, 255, 0.12);
+  border: 1px solid rgba(174, 225, 255, 0.35);
+  border-radius: 1rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.create-field textarea {
+  resize: vertical;
+}
+
+.create-field select option {
+  background: #02030a;
+  color: #ffffff;
+}
+
+.create-field input::placeholder,
+.create-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.create-field input:focus-visible,
+.create-field textarea:focus-visible,
+.create-field select:focus-visible {
+  outline: none;
+  border-color: #aee1ff;
+  box-shadow: 0 0 18px rgba(174, 225, 255, 0.45);
+}
+
+/* world chips */
+
+.world-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.world-chip {
+  padding: 0.55rem 1.1rem;
+  font: inherit;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(174, 225, 255, 0.35);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.world-chip:hover {
+  border-color: #aee1ff;
+}
+
+.world-chip:focus-visible {
+  outline: 2px solid #aee1ff;
+  outline-offset: 2px;
+}
+
+.world-chip.is-selected {
+  background: rgba(120, 60, 255, 0.5);
+  border-color: #aee1ff;
+  box-shadow: 0 0 18px rgba(120, 60, 255, 0.7);
+}
+
+/* submit button, same look as the Launch button on the home page */
+
+.start-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 1rem 2.5rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(120, 60, 255, 0.15);
+  border: 2px solid #aee1ff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.start-button:hover:not(:disabled) {
+  transform: scale(1.04);
+  background: rgba(120, 60, 255, 0.4);
+  box-shadow:
+    0 0 25px rgba(174, 225, 255, 0.8),
+    0 0 60px rgba(120, 60, 255, 0.7);
+}
+
+.start-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.start-button:disabled {
+  cursor: default;
+  filter: brightness(0.6);
+}
+
+/* error */
+
+.create-error {
+  width: 100%;
+  max-width: 36rem;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  color: #ffb4c8;
+  background: rgba(255, 60, 150, 0.12);
+  border: 1px solid rgba(255, 60, 150, 0.5);
+  border-radius: 1rem;
+}
+
+/* story result */
+
+.story {
+  width: 100%;
+  max-width: 42rem;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.story__title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  text-align: center;
+  color: #aee1ff;
+}
+
+.story__text {
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.story__choices {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.story__choices li {
+  padding: 0.75rem 1.1rem;
+  line-height: 1.5;
+  background: rgba(120, 60, 255, 0.12);
+  border-left: 3px solid #aee1ff;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .create {
+    padding-top: 3rem;
+  }
+
+  .start-button {
+    padding: 0.9rem 1.8rem;
+  }
+}

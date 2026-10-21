@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import './home.css'
 import Starfield from './components/starfield/Starfield'
 import ShootingStars from './components/shootingstars/ShootingStars'
@@ -12,6 +13,7 @@ import { Button } from './components/button/Button'
 const PLANETS = ["gas", "aqua", "ember", "frost"]
 
 const Home = () => {
+  const router = useRouter()
   const [launching, setLaunching] = useState(false)
   const [planetIndex, setPlanetIndex] = useState(0)
 
@@ -22,13 +24,14 @@ const Home = () => {
       setPlanetIndex((i) => (i + 1) % PLANETS.length)
     }, 2000)
 
-    const end = setTimeout(() => setLaunching(false), 4000)
+    // after the launch animation, go to the create page
+    const end = setTimeout(() => router.push("/create"), 4000)
 
     return () => {
       clearTimeout(swap)
       clearTimeout(end)
     }
-  }, [launching])
+  }, [launching, router])
 
   const handleMouseMove = (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 2
