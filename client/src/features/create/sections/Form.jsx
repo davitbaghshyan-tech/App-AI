@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { worlds, moods } from "@/features/create/data"
 import { createStory } from "@/services/api"
 import { saveBook } from "@/services/storage"
+import StoryLoader from "./StoryLoader"
 
 const initialValues = {
   characterName: "",
@@ -63,6 +64,8 @@ export default function Form() {
 
   return (
     <form className="create-form" onSubmit={handleSubmit}>
+      {loading && <StoryLoader />}
+
       <label className="create-field">
         <span>Character name</span>
         <input
