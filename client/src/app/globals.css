@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background: #02030a;
+  color: #ffffff;
+  font-family: system-ui, sans-serif;
+}
+
+/* people who get dizzy from animations can turn them off in their OS */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* small pill link in the top-left corner (Home, Create, Adventures, Reader) */
+.top-link {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 10;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #aee1ff;
+  background: rgba(2, 3, 10, 0.5);
+  border: 1px solid rgba(174, 225, 255, 0.4);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.top-link:hover {
+  border-color: #aee1ff;
+  box-shadow: 0 0 20px rgba(174, 225, 255, 0.4);
+}

@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import './home.css'
 import Starfield from './components/starfield/Starfield'
 import ShootingStars from './components/shootingstars/ShootingStars'
@@ -9,26 +11,18 @@ import Title from './components/title/Title'
 import SoundToggle from './components/soundtoggle/SoundToggle'
 import { Button } from './components/button/Button'
 
-const PLANETS = ["gas", "aqua", "ember", "frost"]
-
 const Home = () => {
+  const router = useRouter()
   const [launching, setLaunching] = useState(false)
-  const [planetIndex, setPlanetIndex] = useState(0)
 
   useEffect(() => {
     if (!launching) return
 
-    const swap = setTimeout(() => {
-      setPlanetIndex((i) => (i + 1) % PLANETS.length)
-    }, 2000)
+    // after the launch animation, go to the create page
+    const end = setTimeout(() => router.push("/create"), 4000)
 
-    const end = setTimeout(() => setLaunching(false), 4000)
-
-    return () => {
-      clearTimeout(swap)
-      clearTimeout(end)
-    }
-  }, [launching])
+    return () => clearTimeout(end)
+  }, [launching, router])
 
   const handleMouseMove = (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 2
@@ -41,9 +35,12 @@ const Home = () => {
     <div className='home' onMouseMove={handleMouseMove}>
       <Starfield speed={launching ? 45 : 3} />
       <ShootingStars />
-      <Planet variant={PLANETS[planetIndex]} hidden={launching} />
+      <Planet variant="gas" hidden={launching} />
       <div className='nebula' />
       <SoundToggle />
+      {!launching && (
+        <Link className="top-link" href="/adventures">📚 My Adventures</Link>
+      )}
       <div className={`home-content ${launching ? 'launching' : ''}`}>
         <Title text="ODYSSEY" subtitle="A journey beyond time" />
         <Button onClick={() => setLaunching(true)} disabled={launching}>

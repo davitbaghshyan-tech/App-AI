@@ -1,0 +1,283 @@
+.reader-wrap {
+  min-height: 100vh;
+  padding: 5rem 1.25rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(120, 60, 255, 0.25), transparent 50%),
+    radial-gradient(ellipse at 85% 60%, rgba(0, 150, 255, 0.15), transparent 55%),
+    #02030a;
+}
+
+.reader-note {
+  margin-top: 3rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.reader-book {
+  width: 100%;
+  max-width: 44rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reader-head {
+  text-align: center;
+}
+
+.reader-emoji {
+  font-size: 2.5rem;
+}
+
+.reader-head h1 {
+  margin-top: 0.5rem;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1.15;
+  color: #aee1ff;
+  text-shadow: 0 0 30px rgba(120, 60, 255, 0.8);
+}
+
+.reader-head p {
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* the page of the book */
+
+.reader-paper {
+  position: relative;
+  padding: 2.5rem 2.25rem 3.25rem;
+  min-height: 22rem;
+  border-radius: 0.4rem 1.2rem 1.2rem 0.4rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 50%),
+    rgba(120, 60, 255, 0.1);
+  border: 1px solid rgba(174, 225, 255, 0.35);
+  border-left: 6px solid var(--c1);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(120, 60, 255, 0.25);
+}
+
+.reader-text {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.92);
+  animation: page-in 0.5s ease-out;
+}
+
+.reader-count {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(174, 225, 255, 0.7);
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* progress */
+
+.reader-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.reader-progress-bar {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--c1), var(--c2));
+  box-shadow: 0 0 12px var(--c2);
+  transition: width 0.4s ease;
+}
+
+/* buttons, same look as the Begin the Story button */
+
+.reader-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.reader-controls button {
+  padding: 0.8rem 1.8rem;
+  font: inherit;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  background: rgba(120, 60, 255, 0.15);
+  border: 2px solid #aee1ff;
+  border-radius: 999px;
+  transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.reader-controls button:hover:not(:disabled) {
+  transform: scale(1.05);
+  background: rgba(120, 60, 255, 0.4);
+  box-shadow:
+    0 0 25px rgba(174, 225, 255, 0.8),
+    0 0 60px rgba(120, 60, 255, 0.7);
+}
+
+.reader-controls button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.reader-controls button:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.reader-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  letter-spacing: 0.3em;
+  color: #aee1ff;
+}
+
+.reader-end a {
+  font-size: 0.9rem;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+/* tools row: favorite, read aloud, download, print */
+
+.reader-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.reader-tools button {
+  padding: 0.5rem 1.1rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: #aee1ff;
+  cursor: pointer;
+  background: rgba(2, 3, 10, 0.5);
+  border: 1px solid rgba(174, 225, 255, 0.4);
+  border-radius: 999px;
+  transition: border-color 0.25s, box-shadow 0.25s, color 0.25s;
+}
+
+.reader-tools button:hover {
+  border-color: #aee1ff;
+  box-shadow: 0 0 18px rgba(174, 225, 255, 0.4);
+}
+
+.reader-tools button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.reader-tools button.is-on {
+  color: #ffd166;
+  border-color: #ffd166;
+  background: rgba(255, 209, 102, 0.12);
+}
+
+/* printing: hide the app, show the whole story as black text on white */
+
+.print-story {
+  display: none;
+}
+
+@media print {
+  html,
+  body,
+  .reader-wrap {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .reader-wrap {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .top-link,
+  .reader-head,
+  .reader-tools,
+  .reader-paper,
+  .reader-progress,
+  .reader-controls,
+  .reader-end {
+    display: none !important;
+  }
+
+  .print-story {
+    display: block;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #000000;
+  }
+
+  .print-story h1 {
+    font-size: 2rem;
+    text-align: center;
+    color: #000000;
+    text-shadow: none;
+  }
+
+  .print-sub {
+    margin: 0.4rem 0 1.5rem;
+    text-align: center;
+    color: #444444;
+  }
+
+  .print-story section {
+    margin-bottom: 1.25rem;
+    break-inside: avoid;
+  }
+
+  .print-story h2 {
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #666666;
+  }
+
+  .print-story p {
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+}
+
+/* short status message under the tools row */
+
+.reader-notice {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #ffd1e0;
+}
+
+@media print {
+  .reader-notice {
+    display: none !important;
+  }
+}
