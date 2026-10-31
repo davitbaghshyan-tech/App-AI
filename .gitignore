@@ -1,0 +1,14 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# server (Python)
+.venv/
+__pycache__/
+*.pyc
+
+# client (Next.js)
+node_modules/
+.next/
+out/

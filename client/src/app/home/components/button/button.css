@@ -1,0 +1,65 @@
+.launch-button {
+  position: relative;
+  margin-top: 3rem;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(120, 60, 255, 0.15);
+  border: 2px solid #aee1ff;
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0;
+  animation:
+    button-in 1.2s ease-out 2.4s forwards,
+    button-pulse 2.5s ease-in-out 3.6s infinite;
+  transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.launch-button:hover:not(:disabled) {
+  transform: scale(1.08);
+  background: rgba(120, 60, 255, 0.4);
+  box-shadow:
+    0 0 25px rgba(174, 225, 255, 0.8),
+    0 0 60px rgba(120, 60, 255, 0.7);
+}
+
+.launch-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.launch-button:disabled {
+  cursor: default;
+  filter: brightness(0.6);
+}
+
+@keyframes button-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes button-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(174, 225, 255, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 25px rgba(174, 225, 255, 0.9),
+      0 0 50px rgba(120, 60, 255, 0.6);
+  }
+}
+
+@media (max-width: 700px) {
+  .launch-button {
+    padding: 0.9rem 2.2rem;
+    letter-spacing: 0.25em;
+  }
+}

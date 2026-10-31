@@ -1,0 +1,399 @@
+.library {
+  min-height: 100vh;
+  padding: 5rem 1.25rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(120, 60, 255, 0.25), transparent 50%),
+    radial-gradient(ellipse at 85% 60%, rgba(0, 150, 255, 0.15), transparent 55%),
+    #02030a;
+}
+
+.library-head {
+  text-align: center;
+}
+
+.library-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #aee1ff;
+}
+
+.library-head h1 {
+  margin-top: 0.5rem;
+  font-size: clamp(2.2rem, 7vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.library-head h1 span {
+  color: #aee1ff;
+  text-shadow: 0 0 30px rgba(120, 60, 255, 0.8);
+}
+
+.library-lead,
+.library-note {
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* grid of books */
+
+.book-grid {
+  width: 100%;
+  max-width: 62rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 2rem;
+}
+
+.book-card {
+  position: relative;
+  transition: transform 0.3s;
+}
+
+.book-card:hover {
+  transform: translateY(-8px);
+}
+
+.book-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.book-link:focus-visible {
+  outline: 2px solid #aee1ff;
+  outline-offset: 4px;
+  border-radius: 1rem;
+}
+
+/* the cover looks like a real book: spine on the left, rounded outer corners */
+
+.book-cover {
+  position: relative;
+  min-height: 15rem;
+  padding: 1.25rem 1.25rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0.4rem 1rem 1rem 0.4rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(160deg, var(--c1), var(--c2));
+  border: 1px solid rgba(174, 225, 255, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s;
+}
+
+.book-card:hover .book-cover {
+  box-shadow:
+    0 0 25px rgba(174, 225, 255, 0.5),
+    0 0 60px rgba(120, 60, 255, 0.5);
+}
+
+.book-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.9rem;
+  border-radius: 0.4rem 0 0 0.4rem;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.1));
+}
+
+.book-mood {
+  align-self: flex-start;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(2, 3, 10, 0.45);
+  border-radius: 999px;
+}
+
+.book-emoji {
+  font-size: 3.2rem;
+  text-align: center;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.book-cover-title {
+  font-size: 1.15rem;
+  line-height: 1.25;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.book-info {
+  padding: 0.9rem 0.25rem 0;
+}
+
+.book-hero {
+  font-weight: 700;
+  color: #aee1ff;
+}
+
+.book-meta {
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* delete */
+
+.book-delete {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #ffffff;
+  background: rgba(2, 3, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.book-card:hover .book-delete,
+.book-delete:focus-visible {
+  opacity: 1;
+}
+
+/* touch screens have no hover, so keep it visible there */
+@media (hover: none) {
+  .book-delete {
+    opacity: 1;
+  }
+}
+
+.book-delete:hover {
+  background: rgba(255, 60, 150, 0.6);
+  border-color: #ff3c96;
+}
+
+.book-confirm {
+  position: absolute;
+  inset: 0 0 auto 0;
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border-radius: 0.4rem 1rem 1rem 0.4rem;
+  background: rgba(2, 3, 10, 0.88);
+  border: 1px solid rgba(255, 60, 150, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.book-confirm span {
+  font-weight: 700;
+}
+
+.book-confirm button {
+  width: 6rem;
+  padding: 0.45rem 0;
+  font: inherit;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid #aee1ff;
+  background: transparent;
+}
+
+.book-confirm .book-yes {
+  background: rgba(255, 60, 150, 0.5);
+  border-color: #ff3c96;
+}
+
+.book-confirm button:hover {
+  box-shadow: 0 0 18px rgba(174, 225, 255, 0.5);
+}
+
+/* empty state + buttons */
+
+.library-empty {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.library-button {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  background: rgba(120, 60, 255, 0.15);
+  border: 2px solid #aee1ff;
+  border-radius: 999px;
+  transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.library-button:hover {
+  transform: scale(1.05);
+  background: rgba(120, 60, 255, 0.4);
+  box-shadow:
+    0 0 25px rgba(174, 225, 255, 0.8),
+    0 0 60px rgba(120, 60, 255, 0.7);
+}
+
+/* bottom actions: new adventure + delete all */
+
+.library-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.library-danger,
+.library-confirm button {
+  padding: 0.9rem 1.8rem;
+  font: inherit;
+  font-weight: 700;
+  color: #ffb4c8;
+  cursor: pointer;
+  background: transparent;
+  border: 2px solid rgba(255, 60, 150, 0.6);
+  border-radius: 999px;
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+.library-danger:hover,
+.library-confirm button:hover {
+  background: rgba(255, 60, 150, 0.25);
+  box-shadow: 0 0 25px rgba(255, 60, 150, 0.5);
+}
+
+.library-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(255, 60, 150, 0.5);
+  border-radius: 1.5rem;
+  background: rgba(255, 60, 150, 0.1);
+}
+
+.library-confirm span {
+  font-weight: 700;
+}
+
+.library-confirm button {
+  padding: 0.5rem 1.2rem;
+}
+
+.library-confirm .library-yes {
+  color: #ffffff;
+  background: rgba(255, 60, 150, 0.5);
+}
+
+/* search, sort, favorites filter */
+
+.library-toolbar {
+  width: 100%;
+  max-width: 62rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.library-search,
+.library-select,
+.library-fav {
+  padding: 0.75rem 1.2rem;
+  font: inherit;
+  color: #ffffff;
+  background: rgba(2, 3, 10, 0.55);
+  border: 1px solid rgba(174, 225, 255, 0.4);
+  border-radius: 999px;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.library-search {
+  flex: 1 1 14rem;
+}
+
+.library-search::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.library-select,
+.library-fav {
+  cursor: pointer;
+}
+
+.library-select option {
+  background: #02030a;
+  color: #ffffff;
+}
+
+.library-search:focus,
+.library-select:focus,
+.library-fav:hover {
+  outline: none;
+  border-color: #aee1ff;
+  box-shadow: 0 0 18px rgba(174, 225, 255, 0.35);
+}
+
+.library-fav.is-active {
+  color: #ffd166;
+  border-color: #ffd166;
+  background: rgba(255, 209, 102, 0.12);
+}
+
+/* star on a book card (sits left of the delete button) */
+
+.book-fav {
+  position: absolute;
+  top: 0.6rem;
+  right: 3.3rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #ffffff;
+  background: rgba(2, 3, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.book-card:hover .book-fav,
+.book-fav:focus-visible,
+.book-fav.is-on {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .book-fav {
+    opacity: 1;
+  }
+}
+
+.book-fav:hover {
+  border-color: #ffd166;
+  color: #ffd166;
+}
+
+.book-fav.is-on {
+  color: #ffd166;
+  border-color: #ffd166;
+  background: rgba(255, 209, 102, 0.2);
+}
